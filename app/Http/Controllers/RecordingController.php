@@ -364,9 +364,9 @@ class RecordingController extends Controller
             
 
             //Desarrollo
-            exec("D:\Codigos\Codigos\USS\laravel-crud\docker\ProcesaGrabaciones.py {$joinPaths} {$storagePath}");
+            //exec("D:\Codigos\Codigos\USS\laravel-crud\docker\ProcesaGrabaciones.py {$joinPaths} {$storagePath}");
             //Produccion
-            //exec("python3.8 /ProcesaGrabaciones.py {$joinPaths} {$storagePath}");
+            exec("python3.8 /ProcesaGrabaciones.py {$joinPaths} {$storagePath}");
             //$urlToReturn = "http://54.159.249.200:8080/storage/".$stringGrabacion.".wav";
             //Responder como JSON
             return['url' =>$urlToReturn];
