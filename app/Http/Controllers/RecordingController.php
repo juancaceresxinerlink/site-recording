@@ -353,7 +353,7 @@ class RecordingController extends Controller
 
             Log::debug("STRING DE GRABACION");
             Log::debug($stringGrabacion);
-            $urlToReturn = "http://localhost:8000/storage/".$stringGrabacion.".mp3";
+            $urlToReturn = "https://records.xinerlink.cl/storage/".$stringGrabacion.".mp3";
 
             Log::debug("URL TO RETURN");
             Log::debug($urlToReturn);
