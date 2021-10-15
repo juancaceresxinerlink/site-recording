@@ -15,15 +15,34 @@
 </div>
 @endif
 
-<div class ="table-center">
+
+<div class="col-md-6">
+  
+       <input type="text" id="search" class="form-control" placeholder="Buscar usuario" value="">
+   
+      <!-- <input type="text" id="search" placeholder="Type to search"> -->
+
+       <!--
+      </div>
+      <br>
+      <div class="col-md-2">
+       @csrf
+       <button type="button" name="search" id="search" class="btn btn-success">Search</button>
+      </div>
+-->
+</div>
+<br>
+
+<div id="original-table" class ="table-center">
 <table class="table table-bordered">
  <tr>
    <th>No</th>
    <th>Nombre</th>
-   <th>Email</th>
+   <th>Email original</th>
    <th>Roles</th>
    <th width="280px">Acciones</th>
  </tr>
+ <tbody>
  @foreach ($data as $key => $user)
   <tr>
     <td>{{ ++$i }}</td>
@@ -45,10 +64,16 @@
     </td>
   </tr>
  @endforeach
+</tbody>
  </div> 
 </table>
 
+{{-- Pagination --}}
+<div class="d-flex justify-content-center">
+            {!! $data->links() !!}
+</div>
 
+<!--
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-right">
@@ -56,9 +81,43 @@
         </div>
     </div>
 </div>
+-->
+</div>
 
 
-{!! $data->render() !!}
+
+<script type="text/javascript">
+
+
+var $rows = $('#table tr');
+$('#search').keyup(function() {
+
+   console.log("Cambiando");
+   var val = $.trim($(this).val()).replace(/ +/g, ' ');
+
+   
+   var _token = $("input[name=_token]").val();
+
+   console.log(_token);
+   console.log(val);
+
+   $.ajax({
+   url:"{{ route('users.search') }}",
+   method:"POST",
+   data:{full_text_search_query:val, _token:_token},
+   dataType:"json",   
+   success:function(data)
+   {
+    console.log(data);
+    $("#original-table").html(data);
+    
+
+
+   }
+});
+});
+</script>
+
 
 
 

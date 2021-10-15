@@ -36,6 +36,18 @@ Route::group(['middleware' => ['auth']], function() {
     //nueva forma de trabajar las rutas en laravel 8 
     Route::post('games', [HomeController::class, 'update']);
 
+
+    Route::post('users',[UserController::class,'search'])->name('users.search');
+
+    Route::get('create',[UserController::class,'create'])->name('users.create');
+
+    Route::post('store',[UserController::class,'store'])->name('users.store');
+
+    //Route::get('/create/', [ 'as' => 'users.edit', 'uses' => 'UserController@create']);
+
+    
+
+
     //Obtiene Colas
     Route::get('api/queues', [RecordingController::class, 'getQueues2']);
 
@@ -59,3 +71,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     //Route::post('games', 'HomeController@update');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

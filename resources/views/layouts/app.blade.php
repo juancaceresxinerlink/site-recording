@@ -9,9 +9,14 @@
 
     <title>Movigoo</title>
 
-    <!-- Scripts -->
+
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    
+    <!--
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <!-- Fonts -->
@@ -22,7 +27,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     
-    <link rel="stylesheet" type="text/css" href="storage/css/estilobody.css" >
     
 </head>
 <body>
@@ -55,35 +59,40 @@
                      
                         @else
                         
+                               
+                    
+
+                                <!--Fin menu admin-->
                                 @can('admin-users')
-                                <li><a class="nav-link" href="{{ route('users.index') }}">Administrar usuarios</a></li>
-                                @endcan
+                                <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Administrador <span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                <a class="dropdown-item" href="{{ route('users.index') }}">
+                                    Administrar usuarios
+                                </a>
                                 @can('admin-roles')
-                                <li><a class="nav-link" href="{{ route('roles.index') }}">Administrar roles</a></li>
+                                <a class="dropdown-item" href="{{ route('roles.index') }}">
+                                      Administrar roles
+                                </a>
                                 @endcan
+
+                                <a class="dropdown-item" href="{{ route('users.create') }}">
+                                      Crear usuario
+                                </a>
                                 
+                          
+                                
+                                
+                                </div>
+                                @endcan
 
                                 <li><a class="nav-link" href="{{ route('logout') }}">LogOut</a></li>
                                 
-                                <!--
-                                <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                      LogOut
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                                -->
+                               
 
 
                             </li>

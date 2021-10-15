@@ -42,6 +42,12 @@
 
                 <strong>Role:</strong>
                 {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
+
+                <strong>Colas:</strong>
+                {!! Form::select('queues[]',$queues,$Userqueues, array('class' => 'form-control','multiple')) !!}
+             
+
+
                 <br>
                 <br>
                 <button type="submit" class="btn btn-primary">Actualizar</button>

@@ -44,6 +44,11 @@
                 
              <strong>Roles:</strong>
              {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
+
+             <strong>Colas:</strong>
+             {!! Form::select('queues[]', $queues,[], array('class' => 'form-control','multiple')) !!}
+             
+
              <br>
              <br>
              <button type="submit" class="btn btn-primary">Guardar</button>

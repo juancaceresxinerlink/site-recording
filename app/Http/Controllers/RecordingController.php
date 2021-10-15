@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Recording;
+use App\Models\queue;
 use \Log;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -21,8 +22,13 @@ class RecordingController extends Controller
         $user = Auth::user();
 
         \Log::debug($user);
+        
 
-        $recordings = Recording::select('*')->where('organization_id', '=', $user->organization_id);
+
+
+
+        $recordings = Recording::select('*')->where('organization_id', '=', $user->organization_id)
+                                            ->whereIn('queue',$user->queues->pluck('queueName')->all());
 
         $params = collect(json_decode(base64_decode($request->query()[0])));
 
@@ -60,9 +66,18 @@ class RecordingController extends Controller
         \Log::debug("INFO");
         \Log::debug($user);
 
-        $data = Recording::where('organization_id', '=', $user->organization_id)
+        
+        $data = queue::whereIn('id',$user->queues->pluck('id')->all())
+                ->distinct('queueName')
+                ->pluck('queueName');
+
+        \Log::debug($data);
+
+
+        //Omitir debe hacer consulta a la tabla QUEUE
+        /*$data = Recording::where('organization_id', '=', $user->organization_id)
             ->distinct('queue')
-            ->pluck('queue');
+            ->pluck('queue');*/
 
         return response()->json(base64_encode($data));
     }
@@ -75,6 +90,7 @@ class RecordingController extends Controller
 
         $data = Recording::where('organization_id', '=', $user->organization_id)
             ->where('agent_account', '!=' , '')
+            ->whereIn('queue',$user->queues->pluck('queueName')->all())
             ->distinct('agent_account')
             ->pluck('agent_account');
 

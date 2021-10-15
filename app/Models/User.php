@@ -8,11 +8,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
+use Nicolaslopezj\Searchable\SearchableTrait;
+
+
+use App\Models\queue;
+
 
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable,HasRoles;
+    use HasFactory, Notifiable,HasRoles,SearchableTrait;
 
 
     public $timestamps = false;
@@ -25,6 +30,16 @@ class User extends Authenticatable
      */
     protected $dateFormat = 'd-m-Y H:i:s'; 
     
+
+    protected $searchable = [
+        'columns' => [
+            'users.name'  => 5,
+            'users.email'   => 5
+        ]
+    ];
+
+
+
     protected $fillable = [
         'name',
         'email',
@@ -50,4 +65,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function queues(){
+
+        return $this->belongsToMany(queue::class,'queue_users');
+    }
+
 }
