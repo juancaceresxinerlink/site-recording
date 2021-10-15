@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
 
         //Esto solo para productivo
 
-        //\URL::forceScheme('https');
+        \URL::forceScheme('https');
 
 
     }
