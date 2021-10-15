@@ -1919,8 +1919,8 @@ __webpack_require__.r(__webpack_exports__);
       return axios__WEBPACK_IMPORTED_MODULE_0___default().post("api/s3toURI", {
         "linkRecording": file,
         "idCall": id,
-        //"urlToReturn":"https://record.uss.cl/storage/"
-        "urlToReturn": "http://127.0.0.1:8000/storage/"
+        "urlToReturn": "https://record.uss.cl/storage/" //"urlToReturn":"http://127.0.0.1:8000/storage/"
+
       }).then(function (response) {
         //console.log(response.data.url);
         var audio = document.getElementById("audio-player");
