@@ -97,7 +97,7 @@ RUN php artisan key:generate
 #Run JOB listening 
 #RUN php artisan queue:listen
 
-CMD ["php", "artisan", "quedue:listen"]
+CMD ["php", "artisan", "queue:listen"]
 
 
 #change ownership of our applications
