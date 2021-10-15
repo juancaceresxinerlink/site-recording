@@ -65,6 +65,10 @@ COPY docker/xinerlink.key /xinerlink.key
 
 COPY docker/ProcesaGrabaciones.py /ProcesaGrabaciones.py
 
+
+COPY docker/ProcesaGrabaciones.py /deleteRecording.py
+
+
 #change the web_root to laravel /var/www/html/public folder
 #RUN sed -i -e "s/html/html\/public/g" /etc/apache2/sites-enabled/000-default.conf
 

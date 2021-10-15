@@ -38,7 +38,9 @@ class deleteRecording implements ShouldQueue
         //
         $recordingPath = $this->recordingPath;
         Log::debug("El recording path es ".$recordingPath);
-        exec("D:\Codigos\Codigos\XinerLink\laravel-crud\docker\deleteRecording.py {$recordingPath} ");
+        //exec("D:\Codigos\Codigos\XinerLink\laravel-crud\docker\deleteRecording.py {$recordingPath} ");
+        //PRODUCTIVO
+        exec("python3.8 /deleteRecording.py  {$recordingPath} ");
         
     }
 }
