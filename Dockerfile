@@ -95,7 +95,10 @@ RUN php artisan storage:link
 RUN php artisan key:generate
 
 #Run JOB listening 
-RUN php artisan queue:listen
+#RUN php artisan queue:listen
+
+CMD ["php", "artisan", "quedue:listen"]
+
 
 #change ownership of our applications
 RUN chown -R www-data:www-data $APP_HOME
