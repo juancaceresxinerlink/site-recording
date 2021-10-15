@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use phpseclib\Net\SFTP;
 use phpseclib\Crypt\RSA;
+use App\Jobs\deleteRecording;
 
 class RecordingController extends Controller
 {
@@ -371,20 +372,32 @@ class RecordingController extends Controller
             Log::debug($stringGrabacion);
             $urlToReturn = "https://records.xinerlink.cl/storage/".$stringGrabacion.".mp3";
 
+            //$urlToReturn = "http://127.0.0.1:8000/storage/".$stringGrabacion.".mp3";
+
+
             Log::debug("URL TO RETURN");
             Log::debug($urlToReturn);
 
 
             $storagePath = Storage::disk('local')->path("public/".$stringGrabacion.".wav");
+
+            $storagePathDelete = Storage::disk('local')->path("public/".$stringGrabacion.".mp3");
+
             Log::debug($storagePath);
             
 
             //Desarrollo
-            //exec("D:\Codigos\Codigos\USS\laravel-crud\docker\ProcesaGrabaciones.py {$joinPaths} {$storagePath}");
+            //exec("D:\Codigos\Codigos\XinerLink\laravel-crud\docker\ProcesaGrabaciones.py {$joinPaths} {$storagePath}");
             //Produccion
             exec("python3.8 /ProcesaGrabaciones.py {$joinPaths} {$storagePath}");
             //$urlToReturn = "http://54.159.249.200:8080/storage/".$stringGrabacion.".wav";
             //Responder como JSON
+
+            //Ejecutar JOB 
+            // luego de 5 MIN borra la grabacion temporal que se genera
+            deleteRecording::dispatch($storagePathDelete)->delay(Carbon::now()->addSeconds(300));
+
+
             return['url' =>$urlToReturn];
         
 

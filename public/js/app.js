@@ -1845,6 +1845,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -1872,6 +1874,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 // import moment from 'moment';
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   created: function created() {
     console.log("MOUNTED" + this.recording.id);
@@ -1889,7 +1892,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       console.log(recording_id);
-      return axios.get("api/recordings/audio/".concat(btoa(recording_id))).then(function (response) {
+      return axios__WEBPACK_IMPORTED_MODULE_0___default().get("api/recordings/audio/".concat(btoa(recording_id))).then(function (response) {
         if (response.status === 200 && response.data) {
           console.log(response.data);
           _this.recordingData = response.data;
@@ -1913,10 +1916,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       //AXios llamar a web service AQUI VA EL ENDPOINT DEFINITVO PARA EXTRAER EL FTP
-      return axios.post("api/s3toURI", {
+      return axios__WEBPACK_IMPORTED_MODULE_0___default().post("api/s3toURI", {
         "linkRecording": file,
         "idCall": id,
-        "urlToReturn": "https://record.uss.cl/storage/"
+        //"urlToReturn":"https://record.uss.cl/storage/"
+        "urlToReturn": "http://127.0.0.1:8000/storage/"
       }).then(function (response) {
         //console.log(response.data.url);
         var audio = document.getElementById("audio-player");

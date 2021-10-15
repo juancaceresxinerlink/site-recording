@@ -26,6 +26,7 @@
 
 <script>
   // import moment from 'moment';
+  import axios from 'axios';
 
   export default {
     created() {
@@ -83,6 +84,7 @@
         "linkRecording":file,
         "idCall":id,
         "urlToReturn":"https://record.uss.cl/storage/"
+        //"urlToReturn":"http://127.0.0.1:8000/storage/"
 
      }).then(response => {
 
