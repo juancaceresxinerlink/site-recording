@@ -395,7 +395,7 @@ class RecordingController extends Controller
 
             //Ejecutar JOB 
             // luego de 5 MIN borra la grabacion temporal que se genera
-            deleteRecording::dispatch($storagePathDelete)->delay(Carbon::now()->addSeconds(20));
+            deleteRecording::dispatch($storagePathDelete)->delay(Carbon::now()->addSeconds(300));
 
 
             return['url' =>$urlToReturn];
