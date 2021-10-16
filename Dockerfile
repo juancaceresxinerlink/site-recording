@@ -111,5 +111,7 @@ RUN php artisan key:generate
 #change ownership of our applications
 RUN chown -R www-data:www-data $APP_HOME
 
-RUN nohup php artisan queue:work --daemon &
+#RUN nohup php artisan queue:work --daemon &
+ENTRYPOINT ["php","/var/www/html/artisan","queue:work"]
+
 #CMD ["php", "artisan", "queue:listen"]
