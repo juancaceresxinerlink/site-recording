@@ -70,7 +70,7 @@ COPY docker/xinerlink.key /xinerlink.key
 COPY docker/ProcesaGrabaciones.py /ProcesaGrabaciones.py
 
 
-COPY docker/ProcesaGrabaciones.py /deleteRecording.py
+COPY docker/deleteRecording.py /deleteRecording.py
 
 
 #change the web_root to laravel /var/www/html/public folder
