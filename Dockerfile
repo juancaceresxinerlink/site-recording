@@ -99,7 +99,7 @@ RUN php artisan storage:link
 RUN php artisan key:generate
 
 #Run JOB listening 
-#RUN php artisan queue:listen
+RUN php artisan queue:listen >> listen.txt &
 
 
 
