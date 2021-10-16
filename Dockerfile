@@ -31,6 +31,10 @@ RUN cd / && tar xzf Python-3.8.2.tgz && cd /Python-3.8.2 && ./configure --enable
 
 #Complemento para grabaciones
 RUN apt install ffmpeg -y
+
+#Instalador
+RUN apt-get install liblzma-dev
+
 #Instalar modulo pydub
 RUN pip3.8 install pydub
 
@@ -99,7 +103,9 @@ RUN php artisan storage:link
 RUN php artisan key:generate
 
 #Run JOB listening 
-RUN php artisan queue:listen >> listen.txt &
+#RUN php artisan queue:listen >> listen.txt &
+
+RUN nohup php artisan queue:work --daemon &
 
 
 
