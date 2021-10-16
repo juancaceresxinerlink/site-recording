@@ -105,11 +105,11 @@ RUN php artisan key:generate
 #Run JOB listening 
 #RUN php artisan queue:listen >> listen.txt &
 
-RUN nohup php artisan queue:work --daemon &
 
 
 
 #change ownership of our applications
 RUN chown -R www-data:www-data $APP_HOME
 
+RUN nohup php artisan queue:work --daemon &
 #CMD ["php", "artisan", "queue:listen"]
