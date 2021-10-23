@@ -102,7 +102,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|unique:users',
             'password' => 'required|same:confirm-password',
             'roles' => 'required'
         ]);
@@ -148,9 +148,13 @@ class UserController extends Controller
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
         $queues = queue::pluck('queueName','id')->all();
-        $Userqueues = $user->queues->pluck('queueName','id')->all();
+        
+        $userQueues = $user->queues->pluck('id')->all();
+        
+        \Log::debug($userQueues);
+        \Log::debug($queues);
 
-        return view('users.edit',compact('user','roles','userRole','queues','Userqueues'));
+        return view('users.edit',compact('user','roles','userRole','queues','userQueues'));
     }
     
     /**

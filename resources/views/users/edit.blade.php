@@ -18,6 +18,7 @@
 
 
 
+
 <div class="container">
      <div class="row justify-content-center">
          <div class="col-md-8">
@@ -44,7 +45,7 @@
                 {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
 
                 <strong>Colas:</strong>
-                {!! Form::select('queues[]',$queues,$Userqueues, array('class' => 'form-control','multiple')) !!}
+                {!! Form::select('queues[]',$queues,$userQueues,array('class' => 'form-control','multiple')) !!}
              
 
 
