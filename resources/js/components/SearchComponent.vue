@@ -126,19 +126,33 @@
       </div>
     </div>
 
+  <!--Modificar por un multiple select-->
     <div class="col-12 col-md-4">
       <div class="form-group row">
         <label class="col-sm-4 col-form-label text-right">Cola:</label>
         <div class="col-sm-8">
+
+
+      
+          <multiselect
+            v-model="recording.queue"
+            :options="optionsQueue"
+            multiple
+            ></multiselect>
+        
+          <!--
           <b-form-select
             v-if="disableQueues"
             v-model="recording.queue"
             :options="optionsQueue"
             class="style-chooser"
           ></b-form-select>
+        -->
+
         </div>
       </div>
     </div>
+    
 
     <!-- <div class="col-12 col-md-4"></div> -->
     <div class="col-12 col-md-4">
@@ -185,12 +199,23 @@
 </style>
 
 <script>
+
 import Datepicker from 'vuejs-datepicker';
 Vue.component("date-picker", Datepicker)
 import { es } from "vuejs-datepicker/dist/locale";
 
 import { BFormSelect } from 'bootstrap-vue'
 Vue.component('b-form-select', BFormSelect)
+
+
+import Multiselect from 'vue-multiselect'
+
+Vue.component('multiselect', Multiselect)
+
+
+
+
+
 
 
 export default {
@@ -218,3 +243,5 @@ export default {
   }
 };
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

@@ -23,6 +23,7 @@ class RecordingController extends Controller
         $user = Auth::user();
 
         \Log::debug($user);
+
         
 
 
@@ -103,6 +104,8 @@ class RecordingController extends Controller
 
     public function validate_params(Request $request, $params)
     {
+
+        \Log::debug($params);
 
         // if ($params->has('agent_account') && $params->get('agent_account')) {
         //     $request->validate([
@@ -244,7 +247,13 @@ class RecordingController extends Controller
                     $recordings->where('duration', '>=', $value);
                 } else if ($key === "duration_max") {
                     $recordings->where('duration', '<', $value);
-                } else {
+                } 
+                else if($key === 'queue'){
+                    //Logica de where in para las colas seleccionar mas de una
+                    $recordings->whereIn($key, $value);
+
+                }
+                else {
                     $recordings->where($key, $value);
                 }
             }
