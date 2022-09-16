@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Recording extends Model
 {
-    
-       /**
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -20,6 +20,7 @@ class Recording extends Model
         'dni',
         'queue',
         'id_interaction',
+        'id',
         'call_type',
         'ani',
         'dnis',
@@ -34,5 +35,4 @@ class Recording extends Model
     {
         return Carbon::parse($value)->format('d/m/Y');
     }
-
 }

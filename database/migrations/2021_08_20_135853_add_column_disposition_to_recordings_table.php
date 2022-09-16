@@ -13,12 +13,12 @@ class AddColumnDispositionToRecordingsTable extends Migration
      */
     public function up()
     {
-        /*
+        
         Schema::table('recordings', function (Blueprint $table) {
             //
             $table->string('disposition')->nullable();
         });
-        */
+       
     }
 
     /**
@@ -28,11 +28,11 @@ class AddColumnDispositionToRecordingsTable extends Migration
      */
     public function down()
     {
-        /*
+        
         Schema::table('recordings', function (Blueprint $table) {
             //
             $table->dropColumn('disposition');
         });
-        */
+       
     }
 }

@@ -13,7 +13,7 @@ class Contingencia extends Migration
      */
     public function up()
     {
-        /*
+        
         Schema::create('contingencia', function (Blueprint $table) {
             $table->id();
             $table->string('servicio');
@@ -23,7 +23,7 @@ class Contingencia extends Migration
             $table->string('estado')->nullable();
             $table->timestamps();
         });
-        */
+       
     }
 
 

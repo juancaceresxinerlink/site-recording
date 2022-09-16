@@ -24,13 +24,13 @@ class RecordingController extends Controller
 
         \Log::debug($user);
 
-        
+
 
 
 
 
         $recordings = Recording::select('*')->where('organization_id', '=', $user->organization_id)
-                                            ->whereIn('queue',$user->queues->pluck('queueName')->all());
+            ->whereIn('queue', $user->queues->pluck('queueName')->all());
 
         $params = collect(json_decode(base64_decode($request->query()[0])));
 
@@ -57,7 +57,7 @@ class RecordingController extends Controller
             'pageCount' => ceil($total / $length),
             'recordings' => $recordings_response,
         ])));
-    }  
+    }
 
 
 
@@ -68,10 +68,10 @@ class RecordingController extends Controller
         \Log::debug("INFO");
         \Log::debug($user);
 
-        
-        $data = queue::whereIn('id',$user->queues->pluck('id')->all())
-                ->distinct('queueName')
-                ->pluck('queueName');
+
+        $data = queue::whereIn('id', $user->queues->pluck('id')->all())
+            ->distinct('queueName')
+            ->pluck('queueName');
 
         \Log::debug($data);
 
@@ -91,14 +91,14 @@ class RecordingController extends Controller
         \Log::debug($user);
 
         $data = Recording::where('organization_id', '=', $user->organization_id)
-            ->where('agent_account', '!=' , '')
-            ->whereIn('queue',$user->queues->pluck('queueName')->all())
+            ->where('agent_account', '!=', '')
+            ->whereIn('queue', $user->queues->pluck('queueName')->all())
             ->distinct('agent_account')
             ->pluck('agent_account');
 
         //return response()->json($data);
         return response()->json(base64_encode($data));
-        
+
         //return response()->json(base64_encode($data));
     }
 
@@ -185,7 +185,14 @@ class RecordingController extends Controller
                 'id_interaction' => 'alpha_num',
             ]);
         }
-
+        if ($params->has('id') && $params->get('id')) {
+            // $request->validate([
+            //     'id_interaction' => 'alpha_num',
+            // ]);
+            $this->validate($request, [
+                'id' => 'numeric',
+            ]);
+        }
         if ($params->has('ani') && $params->get('ani')) {
             // $request->validate([
             //     'ani' => 'alpha_num',
@@ -229,7 +236,6 @@ class RecordingController extends Controller
                 ]);
             }
         }
-
     }
 
 
@@ -247,13 +253,10 @@ class RecordingController extends Controller
                     $recordings->where('duration', '>=', $value);
                 } else if ($key === "duration_max") {
                     $recordings->where('duration', '<', $value);
-                } 
-                else if($key === 'queue'){
+                } else if ($key === 'queue') {
                     //Logica de where in para las colas seleccionar mas de una
                     $recordings->whereIn($key, $value);
-
-                }
-                else {
+                } else {
                     $recordings->where($key, $value);
                 }
             }
@@ -269,19 +272,20 @@ class RecordingController extends Controller
 
 
 
-        //Funcion que se conecta a ftp transforma ruta 
-    public function getSftpToFile(Request $request){
+    //Funcion que se conecta a ftp transforma ruta 
+    public function getSftpToFile(Request $request)
+    {
 
 
-            $PathFTP = $request->linkRecording;
-            $idCall = $request->idCall;
-            $urlToReturn = $request->urlToReturn;
-            $privateKey = new RSA();
+        $PathFTP = $request->linkRecording;
+        $idCall = $request->idCall;
+        $urlToReturn = $request->urlToReturn;
+        $privateKey = new RSA();
 
-            $mytime = Carbon::now();
-            $Fecha = $mytime->toDateTimeString();
-            $sftp = new SFTP('sftp-five9.xinerlink.cl');
-            $privateKey->loadKey("-----BEGIN RSA PRIVATE KEY-----
+        $mytime = Carbon::now();
+        $Fecha = $mytime->toDateTimeString();
+        $sftp = new SFTP('sftp-five9.xinerlink.cl');
+        $privateKey->loadKey("-----BEGIN RSA PRIVATE KEY-----
             MIIEogIBAAKCAQEAqa56h4YMkw8iWneSgFu2WIBvOiMehZbEqAst/kjS0YkrPpgl
             d8AUXaiYq5wMVwEYPo09qCt2wUJ2sSYORBh30KNXSVddCchwRhYoDo7Jm9UhEkyY
             K4kNNBkzPAAZezaMNdYWBUctEiDYk7yPsNPIkT1gwX3bpbOaH9w95NhIqkP6MSS5
@@ -308,97 +312,93 @@ class RecordingController extends Controller
             r9KySWC53V7MnjBWfZj20Wywb+ctPr9yjyNTflHaLmV19wsXoUcD2Ti3EjOCNrt1
             LupbU+cGfLCUDwl49aYeTT6i4fi04sOMLP9+ScA9tjVGX3NMBfE=
             -----END RSA PRIVATE KEY-----");
-    
-            if (!$sftp->login('movigoo-five9', $privateKey)) {
-                return "ERROR FTP";
-                \Log::debug("ERROR FTP, clave o usuario invalido");
-            }else{
-                \Log::debug("Conexion correcta a FTP!!!");
-            
 
-                $stringGrabacion = $Fecha.'_'.$idCall;
-                //Return path URL localhost:8000/storage/my_local_filename.wav
-                $stringGrabacion = str_replace(" ","_",$stringGrabacion);
-                $stringGrabacion = str_replace(":","_",$stringGrabacion);
-                //buscar INFO
-                $splitPath = explode("/",$PathFTP);
-    
-                $pathFinal = $splitPath[0]."/".$splitPath[1]."/".$splitPath[2]."/".$splitPath[3]."/".$splitPath[4];
-                
-                Log::debug($pathFinal);
+        if (!$sftp->login('movigoo-five9', $privateKey)) {
+            return "ERROR FTP";
+            \Log::debug("ERROR FTP, clave o usuario invalido");
+        } else {
+            \Log::debug("Conexion correcta a FTP!!!");
 
 
-                //Obtener base url y luego almacenar
-                $stringGrabacion = $Fecha.'_'.$idCall;
-                //Return path URL localhost:8000/storage/my_local_filename.wav
-                $stringGrabacion = str_replace(" ","_",$stringGrabacion);
-                $stringGrabacion = str_replace(":","_",$stringGrabacion);            
-                Log::debug($pathFinal);
-                $files = $sftp->nlist($pathFinal);
+            $stringGrabacion = $Fecha . '_' . $idCall;
+            //Return path URL localhost:8000/storage/my_local_filename.wav
+            $stringGrabacion = str_replace(" ", "_", $stringGrabacion);
+            $stringGrabacion = str_replace(":", "_", $stringGrabacion);
+            //buscar INFO
+            $splitPath = explode("/", $PathFTP);
 
-                
+            $pathFinal = $splitPath[0] . "/" . $splitPath[1] . "/" . $splitPath[2] . "/" . $splitPath[3] . "/" . $splitPath[4];
+
+            Log::debug($pathFinal);
+
+
+            //Obtener base url y luego almacenar
+            $stringGrabacion = $Fecha . '_' . $idCall;
+            //Return path URL localhost:8000/storage/my_local_filename.wav
+            $stringGrabacion = str_replace(" ", "_", $stringGrabacion);
+            $stringGrabacion = str_replace(":", "_", $stringGrabacion);
+            Log::debug($pathFinal);
+            $files = $sftp->nlist($pathFinal);
+
+
             $joinPaths = "";
-            foreach ($files as $file)
-            {
+            foreach ($files as $file) {
                 //Log::debug($file);
-                $final = explode("-",$file);
-                if ($final[2] == $idCall)
-                {
+                $final = explode("-", $file);
+                if ($final[2] == $idCall) {
                     //Encuentra grabaciones segmentadas 
                     Log::debug($file);
-                    $pathFile = $pathFinal."/".$file;
+                    $pathFile = $pathFinal . "/" . $file;
                     //sirve pero no tanto
                     //$file = $sftp->get($pathFile);
                     //generando nombre del archivo definitivo
-                    
-                    $nameFinal = $stringGrabacion."_".$final[4];
+
+                    $nameFinal = $stringGrabacion . "_" . $final[4];
                     $file = $sftp->get($pathFile);
-                    Storage::disk('local')->put('/public//'.$nameFinal.'.wav' ,$file);
-                    
+                    Storage::disk('local')->put('/public//' . $nameFinal . '.wav', $file);
+
                     //by recordring storagePath
-                    $storagePath = Storage::disk('local')->path("public/".$nameFinal.".wav");
-                    
+                    $storagePath = Storage::disk('local')->path("public/" . $nameFinal . ".wav");
+
                     //Generando el ARRAY para luego llamar proceso python y una los archivos
 
-                    $joinPaths = $joinPaths.$storagePath.",";
+                    $joinPaths = $joinPaths . $storagePath . ",";
 
 
                     // una vez con el audio completo se retorna este nuevo unido y con esto evitamos problemas
 
                 }
-
-
             }
-            $joinPaths = '"'.$joinPaths.'"';
+            $joinPaths = '"' . $joinPaths . '"';
             Log::debug($joinPaths);
 
             $file = $sftp->get($PathFTP);
-            Storage::disk('local')->put('/public//'.$stringGrabacion.'.wav' ,$file);
-     
+            Storage::disk('local')->put('/public//' . $stringGrabacion . '.wav', $file);
+
             //$urlToReturn = "https://records.xinerlink.cl/storage/".$stringGrabacion.".mp3";
 
             Log::debug("STRING DE GRABACION");
             Log::debug($stringGrabacion);
-            $urlToReturn = "https://records.xinerlink.cl/storage/".$stringGrabacion.".mp3";
+            // $urlToReturn = "https://records.xinerlink.cl/storage/".$stringGrabacion.".mp3";
 
-            //$urlToReturn = "http://127.0.0.1:8000/storage/".$stringGrabacion.".mp3";
+            $urlToReturn = "http://127.0.0.1:8000/storage/app/public/" . $stringGrabacion . ".mp3";
 
 
             Log::debug("URL TO RETURN");
             Log::debug($urlToReturn);
 
 
-            $storagePath = Storage::disk('local')->path("public/".$stringGrabacion.".wav");
+            $storagePath = Storage::disk('local')->path("public/" . $stringGrabacion . ".wav");
 
-            $storagePathDelete = Storage::disk('local')->path("public/".$stringGrabacion.".mp3");
+            $storagePathDelete = Storage::disk('local')->path("public/" . $stringGrabacion . ".mp3");
 
             Log::debug($storagePath);
-            
+
 
             //Desarrollo
-            //exec("D:\Codigos\Codigos\XinerLink\laravel-crud\docker\ProcesaGrabaciones.py {$joinPaths} {$storagePath}");
+            exec("C:\laragon\www\site-recording\docker\ProcesaGrabaciones.py {$joinPaths} {$storagePath}");
             //Produccion
-            exec("python3.8 /ProcesaGrabaciones.py {$joinPaths} {$storagePath}");
+            // exec("python3.8 /ProcesaGrabaciones.py {$joinPaths} {$storagePath}");
             //$urlToReturn = "http://54.159.249.200:8080/storage/".$stringGrabacion.".wav";
             //Responder como JSON
 
@@ -407,18 +407,7 @@ class RecordingController extends Controller
             deleteRecording::dispatch($storagePathDelete)->delay(Carbon::now()->addSeconds(300));
 
 
-            return['url' =>$urlToReturn];
-        
-
-
-
-            }                
-    
-            
+            return ['url' => $urlToReturn];
         }
-    
-    
-
-
-
+    }
 }

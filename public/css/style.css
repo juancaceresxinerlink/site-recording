@@ -1,0 +1,48 @@
+:root {
+    --color_greenlight_xinerLink: #aac043;
+    --color_greendark_xinerLink: #004b58;
+    --color_greendarklight_xinerLink: #3b9594;
+    --background_page: #fafafa;
+}
+body {
+    background: var(--background_page) !important;
+    color: var(--color_greendark_xinerLink);
+}
+
+hr {
+    background-color: var(--color_greenlight_xinerLink);
+    height: 1px;
+    margin-bottom: 2.2rem;
+}
+button {
+    background-color: #aac043;
+}
+.img-logo {
+    width: 100%;
+    height: 50px;
+}
+.img-card {
+    width: 250px;
+    height: 100%;
+}
+.vgt-table th.sortable button {
+    background-color: #a9c04350 !important;
+}
+/* Custom Button Style */
+.btn-xinerlink {
+    color: var(--background_page);
+    background-color: var(--color_greendarklight_xinerLink);
+    transition: background-color 0.2s ease-in;
+}
+.btn-xinerlink:hover {
+    background-color: var(--color_greendark_xinerLink);
+    color: var(--background_page);
+}
+
+/* clear count page */
+.footer__row-count {
+    display: none;
+}
+.vgt-wrap__footer {
+    background: #a9c04350 !important;
+}

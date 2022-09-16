@@ -13,7 +13,7 @@ class CreateRecordingsTable extends Migration
      */
     public function up()
     {
-        /*
+        
         Schema::create('recordings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('agent_account')->nullable();
@@ -28,7 +28,7 @@ class CreateRecordingsTable extends Migration
             $table->longText('audio_file')->nullable();
             $table->timestamps();
         });
-        */
+       
     }
 
     /**
@@ -38,8 +38,8 @@ class CreateRecordingsTable extends Migration
      */
     public function down()
     {
-        /*
+        
         Schema::dropIfExists('recordings');
-        */
+       
     }
 }

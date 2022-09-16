@@ -13,7 +13,7 @@ class AddColumnToRecordingsTable extends Migration
      */
     public function up()
     {
-        /*
+        
         Schema::table('recordings', function (Blueprint $table) {
             //
             $table->integer('organization_id')->nullable()->unsigned();
@@ -21,7 +21,7 @@ class AddColumnToRecordingsTable extends Migration
                   ->references('id')->on('organizations')
                   ->onDelete('cascade');
         });
-        */
+       
     }
 
     /**
@@ -31,11 +31,11 @@ class AddColumnToRecordingsTable extends Migration
      */
     public function down()
     {
-        /*
+        
         Schema::table('recordings', function (Blueprint $table) {
             //
             $table->dropColumn('organization_id');
         });
-        */
+       
     }
 }

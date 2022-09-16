@@ -35,6 +35,6 @@ class CreateQueueUsersTable extends Migration
      */
     public function down()
     {
-        //Schema::dropIfExists('queue_users');
+        Schema::dropIfExists('queue_users');
     }
 }

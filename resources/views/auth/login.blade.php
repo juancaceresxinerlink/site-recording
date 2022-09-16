@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center ">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header d-flex justify-content-center"><img class="img-card" src="{{ asset('img/logoxinnerlink.png') }}" alt=""></div>
 
                 <div class="card-body">
                     <!--SOLUCIONAR EL LOGIN-->
@@ -43,7 +43,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-xinerlink btn-lg">
                                     {{ __('Login') }}
                                 </button>
 

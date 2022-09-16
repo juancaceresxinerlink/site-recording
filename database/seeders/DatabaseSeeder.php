@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CreateOrganizationsSeeder::class);
         $this->call(CreateAdminUserSeeder::class);
 
-        //$this->call('PermissionTableSeeder');
+        $this->call('PermissionTableSeeder');
 
-        // \App\Models\User::factory(10)->create();
+         \App\Models\User::factory(10)->create();
     }
 }

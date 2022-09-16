@@ -13,7 +13,7 @@ class AddColumnToUsersTable extends Migration
      */
     public function up()
     {
-        /*
+        
         Schema::table('users', function (Blueprint $table) {
             //
             $table->integer('organization_id')->nullable()->unsigned();
@@ -21,7 +21,7 @@ class AddColumnToUsersTable extends Migration
                   ->references('id')->on('organizations')
                   ->onDelete('cascade');
         });
-        */
+       
     }
 
     /**
@@ -31,12 +31,12 @@ class AddColumnToUsersTable extends Migration
      */
     public function down()
     {
-        /*
+        
         Schema::table('users', function (Blueprint $table) {
             //
             $table->dropColumn('organization_id');
         });
-        */
+       
     }
 
 }
